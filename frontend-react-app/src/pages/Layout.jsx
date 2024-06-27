@@ -1,12 +1,12 @@
-import Header from "./Header";
+import Header from "../components/Header";
 import { Outlet } from "react-router-dom";
-import IndexPage from "./pages/IndexPage";
+import HomePage from "./HomePage";
 
 export default function Layout() {
     return (
         <div className="p-4 flex flex-col min-h-screen">
             <Header />
-            <IndexPage />
+            <HomePage />
             <Outlet />
         </div>
     );
