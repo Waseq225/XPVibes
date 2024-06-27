@@ -3,7 +3,7 @@ export const HomePage = () => {
 
     return (
         <div>
-            Index page here
+            HomePage
         </div>
     );
 }
