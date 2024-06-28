@@ -17,7 +17,7 @@ export const Categories = () => {
                 width: '100%',
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                backgroundColor: 'yellow',
+                backgroundColor: 'teal',
                 borderRadius: '0',
                 padding: '10px 0'
             }}>

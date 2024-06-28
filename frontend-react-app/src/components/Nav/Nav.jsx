@@ -23,7 +23,7 @@ export const Nav = () => {
                 width: '100%',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: 'yellow',
+                backgroundColor: 'turquoise',
                 borderRadius: '0',
                 padding: '25px 15px'
             }}>

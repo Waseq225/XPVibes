@@ -9,7 +9,7 @@ export default function RegisterPage() {
     const [password, setPassword] = useState('');
 
     function registerUser(ev) {
-        // ev.prevantDefault();
+        ev.prevantDefault();
         axios.get('http://localhost:4000/test')
             .then((data) => {
                 console.log(data);
