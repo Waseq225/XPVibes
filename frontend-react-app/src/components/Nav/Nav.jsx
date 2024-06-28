@@ -7,13 +7,16 @@ import {
     IconButton,
     Paper
 } from '@mui/material';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Hamburger } from './Hamburger/Hamburger';
 import { SearchBar } from './SearchBar/SearchBar';
 
 
 
 export const Nav = () => {
+    const location = useLocation();
+    const { pathname } = location;
+    const shouldHideSearch = pathname === '/login' || pathname === '/register';
 
     return (
         <Paper
@@ -34,7 +37,7 @@ export const Nav = () => {
             </Link>
 
             <Box sx={{ flexBasis: '50%' }}>
-                <SearchBar />
+                {shouldHideSearch ? null : <SearchBar />} 
             </Box>
             <Box sx={{
                 display: 'flex',

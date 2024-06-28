@@ -1,22 +1,42 @@
 import { Link } from "react-router-dom";
-import Header from "../components/Header";
+// import Header from "../components/Header";
+import {
+    Box,
+    Button,
+    TextField,
+    Typography
+} from '@mui/material';
 
-export default function LoginPage() {
+export const LoginPage = () => {
     return (
+        <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: '5rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '450px' }}>
+                <Typography variant="h1" textAlign={'center'} >Vibe in!</Typography>
+                <form id='loginform' onSubmit={(ev) => { ev.preventDefault(); console.log(ev) }}>
 
-        <><Header /><div className="mt-4 grow flex items-center justify-around">
-            <div className="mb-64">
-                <h1 className="text-4xl text-center mb-4">Login</h1>
-                <form className="max-w-md mx-auto">
-                    <input type="email" className="custom-input" placeholder={'your@email.com'} />
-                    <input type="password" className="custom-input" placeholder="password" />
-                    <button className="primary">Login</button>
-                    <div className="text-center py-2 text-gray-500">
-                        Don`t have an account yet? <Link className='underline text-black' to={'/register'}>Register now</Link>
-                    </div>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        <TextField
+                            id="email"
+                            label="Email"
+                            type="email"
+                            variant="outlined"
+                        />
+                        <TextField
+                            id="password"
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                        />
+                        <Button type='submit' form='loginform' variant="contained"> Login </Button>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', paddingTop: '1rem' }}>
+                            <Typography>Don`t have an account yet? </Typography>
+                            <Link to={'/register'}>
+                                <Typography sx={{ textDecoration: 'underline' }}>Register now</Typography>
+                            </Link>
+                        </Box>
+                    </Box>
                 </form>
-            </div>
-
-        </div></>
+            </Box>
+        </Box>
     );
 }

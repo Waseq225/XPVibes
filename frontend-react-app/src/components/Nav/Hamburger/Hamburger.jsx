@@ -1,8 +1,8 @@
 import { alpha, styled } from '@mui/material/styles';
 import React from 'react';
-import axios from 'axios'
+// import axios from 'axios'
 
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     AccountBox,
     HelpOutline,
@@ -72,18 +72,6 @@ export const Hamburger = () => {
     };
 
 
-    const handleRegisterUser = () => {
-        axios.get('http://localhost:4000/test')
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        handleClose()
-    }
-
-
     return (
         <div>
             <IconButton id="demo-customized-button"
@@ -114,10 +102,11 @@ export const Hamburger = () => {
                 }}
                 sx={{ width: '400px' }}
             >
-                <MenuItem onClick={handleRegisterUser}>
+                <Link to={'login'}>
+                <MenuItem onClick={handleClose}>
                     <Person />
                     Login / Sign Up
-                </MenuItem>
+                </MenuItem></Link>
                 <MenuItem onClick={handleClose}>
                     <AccountBox />
                     My Profile

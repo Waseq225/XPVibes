@@ -1,51 +1,67 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import axios from 'axios'
-import Header from '../components/Header'
+import { Box, Button, TextField, Typography } from "@mui/material";
 
-export default function RegisterPage() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+export const RegisterPage = () => {
 
-    function registerUser(ev) {
-        ev.prevantDefault();
-        axios.get('http://localhost:4000/test')
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+
+    const registerUser = (ev) => {
+
+        ev.preventDefault();
+        const email = ev.target.elements.email.value
+        const username = ev.target.elements.username.value
+        const password = ev.target.elements.password.value
+
+        console.log({
+            email,
+            username,
+            password
+        })
+        axios.post('/register', {
+            name: username,
+            password,
+            email
+        })
+        .then((res) => console.log(res)).catch((err) => console.log(err))
+
+
     }
 
     return (
-        <>
-            <Header />
-            <div className="mt-4 grow flex items-center justify-around">
-                <div className="mb-64">
-                    <h1 className="text-4xl text-center mb-4">Register</h1>
-                    <form className="max-w-md mx-auto " onSubmit={registerUser} >
-                        <input type="text" className="custom-input"
-                            placeholder="John Doe"
-                            value={name}
-                            onChange={ev => setName(ev.target.value)} />
-                        <input type="email" className="custom-input"
-                            placeholder={'your@email.com'}
-                            value={email}
-                            onChange={ev => setEmail(ev.target.value)} />
-                        <input type="password" className="custom-input"
-                            placeholder="password"
-                            value={password}
-                            onChange={ev => setPassword(ev.target.value)} />
-                        <button className="primary" >Register</button>
-                        <div className="text-center py-2 text-gray-500">
-                            Already a member? <Link className='underline text-black' to={'/login'}>Login</Link>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </>
+        <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop:'5rem' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column' , gap:'1rem',  width: '450px'}}>
+                <Typography variant="h1" textAlign={'center'} >Register Now!</Typography>
+                <form id = 'registerform' onSubmit={registerUser}>
+             
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <TextField
+                            id="username"
+                            label="Name"
+                            type="text"
+                            variant="outlined"
+                        />
+                        <TextField
+                            id="email"
+                            label="Email"
+                            type="email"
+                            variant="outlined"
+                        />
+                        <TextField
+                            id="password"
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                        />
+                        <Button type='submit' form='registerform' variant="contained"> Register </Button>
+                        <Box sx= {{display:'flex', alignItems: 'center', justifyContent: 'center', gap:'5px', paddingTop:'1rem'}}>
+                            <Typography>Already have an account?</Typography>
+                            <Link to={'/login'}>
+                                <Typography sx={{ textDecoration: 'underline'}}>Login</Typography>
+                            </Link>
+                        </Box>
+                    </Box>
+                </form>
+            </Box>
+        </Box>
     );
 }
