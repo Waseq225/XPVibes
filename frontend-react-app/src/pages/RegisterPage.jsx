@@ -5,28 +5,30 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 export const RegisterPage = () => {
 
 
-    const registerUser = (ev) => {
+    const registerUser = async(ev) => {
 
         ev.preventDefault();
         const email = ev.target.elements.email.value
         const username = ev.target.elements.username.value
         const password = ev.target.elements.password.value
 
-        console.log({
-            email,
-            username,
-            password
-        })
-        axios.post('/register', {
+        // console.log({
+        //     email,
+        //     username,
+        //     password
+        // })
+        try{    
+            await axios.post('/register', {
             name: username,
             password,
             email
         })
-        .then((res) => console.log(res)).catch((err) => console.log(err))
-
-
+        alert('Registration successful')
+    }catch(e){
+        alert('Email already in use. Use a different email')
     }
-
+        // .then((res) => console.log(res)).catch((err) => console.log(err)); 
+ }
     return (
         <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop:'5rem' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column' , gap:'1rem',  width: '450px'}}>
