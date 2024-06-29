@@ -1,7 +1,7 @@
 import { alpha, styled } from '@mui/material/styles';
-import React from 'react';
+import React, { useContext } from 'react';
 // import axios from 'axios'
-
+import { UserContext } from '../../../userContext';
 import { Link } from 'react-router-dom';
 import {
     AccountBox,
@@ -71,7 +71,7 @@ export const Hamburger = () => {
         setAnchorEl(null);
     };
 
-
+const {user} = useContext(UserContext);
     return (
         <div>
             <IconButton id="demo-customized-button"
@@ -106,7 +106,13 @@ export const Hamburger = () => {
                 <MenuItem onClick={handleClose}>
                     <Person />
                     Login / Sign Up
-                </MenuItem></Link>
+                </MenuItem>
+                {!!user &&(
+                    <div>
+                        {user.name}
+                    </div>
+                )}
+                </Link>
                 <MenuItem onClick={handleClose}>
                     <AccountBox />
                     My Profile

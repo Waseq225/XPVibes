@@ -5,8 +5,9 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { useState } from "react";
+import { UseContext, useState } from "react";
 import axios from "axios";
+import { UserContext } from "../userContext";
 
 export const LoginPage = () => {
 
@@ -15,10 +16,10 @@ export const LoginPage = () => {
         ev.preventDefault();
         const email = ev.target.elements.email.value
         const password = ev.target.elements.password.value
+        const {setUser} = UseContext(UserContext);
         try{    
-            await axios.post('/login', {
-            email,password
-        })
+            const data = await axios.post('/login', {email,password})
+        setUser(data)
         alert('Login successful')
         setRedirect(true)
     }catch(e){
