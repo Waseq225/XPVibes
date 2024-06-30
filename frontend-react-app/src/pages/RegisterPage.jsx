@@ -36,19 +36,19 @@ export const RegisterPage = () => {
                 <form id = 'registerform' onSubmit={registerUser}>
              
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <TextField
+                    <TextField required
                             id="username"
                             label="Name"
                             type="text"
                             variant="outlined"
                         />
-                        <TextField
+                        <TextField required
                             id="email"
                             label="Email"
                             type="email"
                             variant="outlined"
                         />
-                        <TextField
+                        <TextField required
                             id="password"
                             label="Password"
                             type="password"

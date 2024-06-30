@@ -5,30 +5,30 @@ import {
     TextField,
     Typography
 } from '@mui/material';
-import { UseContext, useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../userContext";
 
 export const LoginPage = () => {
 
-    const [ redirect, setRedirect] = useState()
-    const handleLoginSubmit = async (ev) =>{
+    const [redirect, setRedirect] = useState()
+    const { setUser } = useContext(UserContext);
+    const handleLoginSubmit = async (ev) => {
         ev.preventDefault();
         const email = ev.target.elements.email.value
         const password = ev.target.elements.password.value
-        const {setUser} = UseContext(UserContext);
-        try{    
-            const data = await axios.post('/login', {email,password})
-        setUser(data)
-        alert('Login successful')
-        setRedirect(true)
-    }catch(e){
-        alert('Login failed')
+
+        try {
+            const {data} = await axios.post('/login', { email, password })
+            setUser(data)
+            alert('Login successful')
+            setRedirect(true)
+        } catch (e) {
+            alert('Login failed')
+        }
     }
-        // .then((res) => console.log(res)).catch((err) => console.log(err)); 
-    }
-    if (redirect){
-        return <Navigate to = {'/'} />
+    if (redirect) {
+        return <Navigate to={'/'} />
     }
     return (
         <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: '5rem' }}>
@@ -37,14 +37,14 @@ export const LoginPage = () => {
                 <form id='loginform' onSubmit={handleLoginSubmit}>
 
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <TextField
+                        <TextField required
                             id="email"
                             label="Email"
                             type="email"
                             variant="outlined"
-                            
+
                         />
-                        <TextField
+                        <TextField required
                             id="password"
                             label="Password"
                             type="password"

@@ -71,7 +71,8 @@ export const Hamburger = () => {
         setAnchorEl(null);
     };
 
-const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
+
     return (
         <div>
             <IconButton id="demo-customized-button"
@@ -102,21 +103,19 @@ const {user} = useContext(UserContext);
                 }}
                 sx={{ width: '400px' }}
             >
-                <Link to={'login'}>
-                <MenuItem onClick={handleClose}>
-                    <Person />
-                    Login / Sign Up
-                </MenuItem>
-                {!!user &&(
-                    <div>
-                        {user.name}
-                    </div>
-                )}
-                </Link>
-                <MenuItem onClick={handleClose}>
-                    <AccountBox />
-                    My Profile
-                </MenuItem>
+                {user ?
+                    (<Link to = {'profile'}><MenuItem onClick={handleClose}>
+                        <AccountBox />
+                        {user.name}&apos;s Profile
+                    </MenuItem></Link>)
+                    : (<Link to={'login'}>
+                        <MenuItem onClick={handleClose}>
+                            <Person />
+                            Login / Sign Up
+                        </MenuItem>
+                    </Link>)}
+
+
                 <Divider sx={{ my: 0.5 }} />
                 <MenuItem onClick={handleClose}>
                     <Receipt />
@@ -131,6 +130,13 @@ const {user} = useContext(UserContext);
                     <HelpOutline />
                     Help
                 </MenuItem>
+
+                {user ? (<><Divider sx={{ my: 0.5 }} /><MenuItem onClick={handleClose}>
+                    <HelpOutline />
+                    Sign Out
+                </MenuItem></>) : null
+
+                }
             </StyledMenu>
         </div>
     );
