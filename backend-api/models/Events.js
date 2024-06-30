@@ -4,15 +4,9 @@ const { Schema } = mongoose
 const EventSchema = new Schema({
     title: { type: String, required: true },
     location: {
-        address: String,
         city: String,
         state: String,
-        country: String,
-        zipCode: String,
-        coordinates: {
-            latitude: Number,
-            longitude: Number,
-        },
+        country: String
     },
     photos: [String],
     description: { type: String, required: true },
