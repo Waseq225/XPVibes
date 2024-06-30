@@ -6,6 +6,7 @@ import { RegisterPage } from './pages/RegisterPage.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
 import axios from "axios"
 import { UserContextProvider } from './userContext.jsx'
+import { ProfilePage } from './pages/ProfilePage.jsx'
 
 axios.defaults.baseURL = "http://localhost:4000"
 axios.defaults.withCredentials = true
@@ -15,15 +16,16 @@ axios.defaults.withCredentials = true
 function App() {
   return (
     <UserContextProvider>
-    <>
-      <Nav/>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-      </Routes>
-    </>
+      <>
+        <Nav />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/profile' element={<ProfilePage />} />
+        </Routes>
+      </>
     </UserContextProvider>
   )
 

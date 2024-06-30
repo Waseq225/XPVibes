@@ -104,7 +104,7 @@ export const Hamburger = () => {
                 sx={{ width: '400px' }}
             >
                 {user ?
-                    (<Link to = {'profile'}><MenuItem onClick={handleClose}>
+                    (<Link to={'profile'}><MenuItem onClick={handleClose}>
                         <AccountBox />
                         {user.name}&apos;s Profile
                     </MenuItem></Link>)
@@ -131,10 +131,14 @@ export const Hamburger = () => {
                     Help
                 </MenuItem>
 
-                {user ? (<><Divider sx={{ my: 0.5 }} /><MenuItem onClick={handleClose}>
-                    <HelpOutline />
-                    Sign Out
-                </MenuItem></>) : null
+                {user ? (
+                    <>
+                        <Divider sx={{ my: 0.5 }} />
+                        <MenuItem onClick={handleClose}>
+                            <HelpOutline />
+                            Sign Out
+                        </MenuItem>
+                    </>) : null
 
                 }
             </StyledMenu>
