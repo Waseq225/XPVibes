@@ -18,14 +18,14 @@ export const LoginPage = () => {
         const email = ev.target.elements.email.value
         const password = ev.target.elements.password.value
 
-        try {
-            const {data} = await axios.post('/login', { email, password })
+        axios.post('/login', { email, password }).then(({ data }) => {
             setUser(data)
             alert('Login successful')
             setRedirect(true)
-        } catch (e) {
-            alert('Login failed')
-        }
+        }).catch((e) =>
+            alert('Login failed' + e)
+        )
+
     }
     if (redirect) {
         return <Navigate to={'/'} />

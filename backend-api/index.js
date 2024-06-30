@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const bcrypt = require('bcryptjs')
 const User = require('./models/Users.js')
-const cookieParser = require ('cookie-parser')
+const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
 
@@ -26,25 +26,19 @@ app.use(cors(corsOptions))
 
 mongoose.connect(process.env.MONGO_URL)
 
-app.get('/test', (req, res) => {
-    res.json('message ok')
-    return res
-})
-
 //Register endpoint
 app.post('/register', async (req, res) => {
     const { name, email, password } = req.body
 
-    try {
-        const userDoc = await User.create({
-            name,
-            email,
-            password: bcrypt.hashSync(password, bcryptSalt),
+    User.create({
+        name,
+        email,
+        password: bcrypt.hashSync(password, bcryptSalt),
+    })
+        .then((userDoc) => res.json(userDoc))
+        .catch((exception) => {
+            res.status(422).json(exception)
         })
-        res.json(userDoc)
-    } catch (exception) {
-        res.status(422).json(exception)
-    }
 })
 
 //Login endpoint
@@ -72,17 +66,16 @@ app.post('/login', async (req, res) => {
     }
 })
 
-
 //Profile endpoint
-app.get('/profile', async(req, res) =>{
-    const{token} = req.cookies
-    if(token){
-        jwt.verify(token,jwtSecret, {}, async (err, userData)=>{
-           if(err) throw err 
-           const {name, email, _id} = await User.findById(userData.id)
-           res.json({name, email, _id})
+app.get('/profile', async (req, res) => {
+    const { token } = req.cookies
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+            if (err) throw err
+            const { name, email, _id } = await User.findById(userData.id)
+            res.json({ name, email, _id })
         })
-    }else{
+    } else {
         res.json(null)
     }
 })
