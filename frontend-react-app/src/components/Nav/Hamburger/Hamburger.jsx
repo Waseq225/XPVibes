@@ -1,8 +1,6 @@
 import { alpha, styled } from '@mui/material/styles';
 import React, { useContext } from 'react';
 // import axios from 'axios'
-import { UserContext } from '../../../userContext';
-import { Link } from 'react-router-dom';
 import {
     AccountBox,
     HelpOutline,
@@ -16,6 +14,8 @@ import {
     Menu,
     MenuItem
 } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../../userContext';
 
 
 // Change specific css here for the popup menu
@@ -62,16 +62,18 @@ const StyledMenu = styled((props) => (
 
 export const Hamburger = () => {
 
+    const { user } = useContext(UserContext);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
 
-    const { user } = useContext(UserContext);
 
     return (
         <div>
@@ -134,13 +136,14 @@ export const Hamburger = () => {
                 {user ? (
                     <>
                         <Divider sx={{ my: 0.5 }} />
-                        <MenuItem onClick={handleClose}>
-                            <HelpOutline />
-                            Sign Out
-                        </MenuItem>
-                    </>) : null
-
-                }
+                        <Link to={'logout'}>
+                            <MenuItem onClick={handleClose}>
+                                <HelpOutline />
+                                Sign Out
+                            </MenuItem>
+                        </Link>
+                    </>
+                ) : null}
             </StyledMenu>
         </div>
     );

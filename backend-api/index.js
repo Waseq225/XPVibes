@@ -66,6 +66,11 @@ app.post('/login', async (req, res) => {
     }
 })
 
+//Logout endpoint
+app.post('/logout', async(req, res) =>{
+    res.cookie('token','').json(true)
+})
+
 //Profile endpoint
 app.get('/profile', async (req, res) => {
     const { token } = req.cookies

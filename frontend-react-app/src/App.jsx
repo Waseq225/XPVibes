@@ -7,6 +7,7 @@ import { LoginPage } from './pages/LoginPage.jsx'
 import axios from "axios"
 import { UserContextProvider } from './userContext.jsx'
 import { ProfilePage } from './pages/ProfilePage.jsx'
+import { LogoutPage } from './pages/LogoutPage.jsx'
 
 axios.defaults.baseURL = "http://localhost:4000"
 axios.defaults.withCredentials = true
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path='/login' element={<LoginPage />} />
+          <Route path='/logout' element={<LogoutPage />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/profile' element={<ProfilePage />} />
         </Routes>
