@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const bcrypt = require('bcryptjs')
 const User = require('./models/Users.js')
+const Ticket = require('./models/Events.js') // for now named it ticket instead of event
 const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
@@ -85,4 +86,45 @@ app.get('/profile', async (req, res) => {
     }
 })
 
+//AddEvent endpoint
+app.post('/addevent', async (req, res) => {
+    const { token } = req.cookies
+    const {
+        title,
+        venue,
+        photos,
+        description,
+        extraInfo,
+        start,
+        categories,
+        price,
+        ticketsAvailable,
+    } = req.body
+
+    if (token) {
+        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+            if (err) throw err
+
+            Ticket.create({
+                title,
+                venue,
+                photos,
+                description,
+                extraInfo,
+                start,
+                organizer: userData.id, // change to actual organizer later
+                categories,
+                price,
+                ticketsAvailable,
+            })
+                .then((EventDoc) => res.json(EventDoc))
+                .catch((exception) => {
+                    res.status(422).json(exception)
+                })
+
+        })
+    } else {
+        throw new Error('Invalid login')
+    }
+})
 app.listen(4000)
