@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const EventSchema = new Schema({
+
+    organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+
     title: { type: String },
 
     // location: {
@@ -20,7 +23,6 @@ const EventSchema = new Schema({
 
     start: { type: Date },
 
-    organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
     // {
     //     name: { type: String },
@@ -41,6 +43,10 @@ const EventSchema = new Schema({
         type: Number,
         min: 0,
     }, //think of open to public events
+
+
+    //verification{}
+
 
     // createdAt: {
     //     type: Date,

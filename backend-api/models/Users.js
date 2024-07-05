@@ -6,7 +6,8 @@ const UserSchema = new Schema({
     email: { type: String, unique: true },
     password: String,
 
-    // phone: 
+    // phone or gmail/facebook/IG(firebase):
+    // NID in profile completion for PG-18 events
 })
 
 const UserModel = mongoose.model('User', UserSchema)
