@@ -121,10 +121,17 @@ app.post('/addevent', async (req, res) => {
                 .catch((exception) => {
                     res.status(422).json(exception)
                 })
-
         })
     } else {
-        throw new Error('Invalid login')
+        throw new Error('Login first')
     }
 })
+
+//Homepage Events endpoint
+app.get('/getevent', async (req, res) => {
+    const events = await Ticket.find()
+
+    res.json(events)
+})
+
 app.listen(4000)

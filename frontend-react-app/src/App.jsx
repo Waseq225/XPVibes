@@ -12,6 +12,7 @@ import { LogoutPage } from './pages/LogoutPage.jsx'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
 import { AddEvent } from './pages/AddEvent.jsx'
+import { EventGrid } from './components/EventGrid/EventGrid.jsx'
 
 axios.defaults.baseURL = "http://localhost:4000"
 axios.defaults.withCredentials = true
@@ -31,16 +32,14 @@ function App() {
             <Route path='/logout' element={<LogoutPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/addevent' element={<AddEvent />} />
+            <Route path='/addevent' element={<AddEvent />} /> {/* Change this route */} 
+            <Route path='/getevent' element={<EventGrid />} />  {/* Change this route */}
           </Routes>
         </>
       </UserContextProvider>
     </LocalizationProvider>
   )
 
-  // url: / -> Header, Body (HomePage)
-  // url: /login -> Header, LoginPage 
-  // url: /register ->  Header, RegisterPage
 }
 export default App
 

@@ -7,16 +7,17 @@ import { useState } from "react";
 
 export const AddEvent = () => {
 
+    
     const [startDate, setStartDate] = useState(null)
+
 
 
     const stringFields = [
 
         "title",
         "venue",
-        "photos",
         "description",
-        "extraInfo",
+        // "extraInfo",
         "categories",
     ]
 
@@ -28,22 +29,20 @@ export const AddEvent = () => {
         const [
             title,
             venue,
-            photos,
             description,
-            extraInfo,
+            // extraInfo,
             categories,
         ] = stringFields.map(field => ev.target.elements[field].value)
 
+        // const photos = ev.target.elements.photos.value //Need to fix this
         const price = ev.target.elements.price.value
         const ticketsAvailable = ev.target.elements.ticketsAvailable.value
-
 
         console.log({
             title,
             venue,
-            photos,
             description,
-            extraInfo,
+            // extraInfo,
             categories,
             startDate,
         })
@@ -60,9 +59,8 @@ export const AddEvent = () => {
         axios.post('/addEvent', {
             title,
             venue,
-            photos,
             description,
-            extraInfo,
+            // extraInfo,
             categories,
             price,
             ticketsAvailable,
@@ -97,6 +95,18 @@ export const AddEvent = () => {
                             />)
 
                         }
+                        {/* <Button
+                            id ="photos"
+                            variant="outlined"
+                            component="label"
+                            label = "photos"
+                        >
+                            <input
+                            value ={photosLink} 
+                            onChange={ev => setphotosLink(ev.target.value)}
+                      
+                            />
+                        </Button> */}
 
                         <TextField
                             id="price"
@@ -118,7 +128,7 @@ export const AddEvent = () => {
                         />
 
 
-                        <Button type='submit' form='addEventform' variant="contained"> addEvent </Button>
+                        <Button type='submit' form='addEventform' variant="contained"> Add your Event </Button>
 
                     </Box>
                 </form>
