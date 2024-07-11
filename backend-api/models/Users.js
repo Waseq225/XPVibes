@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+//Standardize schemas
+
 const UserSchema = new Schema({
     name: String,
     email: { type: String, unique: true },

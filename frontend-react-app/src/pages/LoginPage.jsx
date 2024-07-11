@@ -18,7 +18,7 @@ export const LoginPage = () => {
         const email = ev.target.elements.email.value
         const password = ev.target.elements.password.value
 
-        axios.post('/login', { email, password }).then(({ data }) => {
+        axios.post('/auth/login', { email, password }).then(({ data }) => {
             setUser(data)
             alert('Login successful')
             setRedirect(true)

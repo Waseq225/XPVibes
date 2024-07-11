@@ -4,7 +4,6 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
 
 
-
 export const AddEvent = () => {
 
     
@@ -56,7 +55,7 @@ export const AddEvent = () => {
             minute,
         } = startDate.c
 
-        axios.post('/addEvent', {
+        axios.post('/events/addEvent', {
             title,
             venue,
             description,

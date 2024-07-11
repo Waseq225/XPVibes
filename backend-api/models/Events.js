@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 
+//Standardized schema
 const EventSchema = new Schema({
 
     organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

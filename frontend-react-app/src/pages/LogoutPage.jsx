@@ -9,10 +9,9 @@ export const LogoutPage = () => {
 
     useEffect(() => {
         if (user) {
-            axios.post('/logout')
+            axios.post('/auth/logout')
                 .then(() => {
                     setUser(null)
-                    alert('Logout success')
                 }).catch((e) =>
                     alert('Logout failed' + e)
                 )

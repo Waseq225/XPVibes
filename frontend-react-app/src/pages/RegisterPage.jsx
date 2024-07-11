@@ -12,7 +12,7 @@ export const RegisterPage = () => {
         const username = ev.target.elements.username.value
         const password = ev.target.elements.password.value
 
-        axios.post('/register', {
+        axios.post('/auth/register', {
             name: username,
             password,
             email

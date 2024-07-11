@@ -18,7 +18,6 @@ axios.defaults.baseURL = "http://localhost:4000"
 axios.defaults.withCredentials = true
 
 
-
 function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterLuxon}>
@@ -32,7 +31,7 @@ function App() {
             <Route path='/logout' element={<LogoutPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/profile' element={<ProfilePage />} />
-            <Route path='/addevent' element={<AddEvent />} /> {/* Change this route */} 
+            <Route path='/addevent' element={<AddEvent />} /> {/* Change this route */}
             <Route path='/getevent' element={<EventGrid />} />  {/* Change this route */}
           </Routes>
         </>

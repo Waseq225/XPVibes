@@ -7,9 +7,8 @@ export const EventGrid = () => {
 
     useEffect(() => {
         axios
-            .get('/getevent')
+            .get('/events/getevent')
             .then((res) => {
-                console.log(res.data)
                 setEvents(res.data)
             })
             .catch((e) => alert(e.message))
@@ -45,8 +44,8 @@ export const EventGrid = () => {
                 >
                     {events
                         ? events.map(({ _id, title }) => (
-                              <li key={_id}>{title}</li>
-                          ))
+                            <li key={_id}>{title}</li>
+                        ))
                         : null}
                 </Box>
             </Box>

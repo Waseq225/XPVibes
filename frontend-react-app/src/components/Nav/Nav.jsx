@@ -37,7 +37,7 @@ export const Nav = () => {
             </Link>
 
             <Box sx={{ flexBasis: '50%' }}>
-                {shouldHideSearch ? null : <SearchBar />} 
+                {shouldHideSearch ? null : <SearchBar />}
             </Box>
             <Box sx={{
                 display: 'flex',
