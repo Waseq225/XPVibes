@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+import mongoose, {Schema} from 'mongoose'
 
 //Standardize schemas
 
@@ -10,8 +9,9 @@ const UserSchema = new Schema({
 
     // phone or gmail/facebook/IG(firebase):
     // NID in profile completion for PG-18 events
-})
+}, {timestamps:true})
+;
 
 const UserModel = mongoose.model('User', UserSchema)
 
-module.exports = UserModel
+export default UserModel

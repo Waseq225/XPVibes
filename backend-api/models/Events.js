@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 //Standardized schema
@@ -58,7 +58,7 @@ const EventSchema = new Schema({
     //     type: Date,
     //     default: Date.now,
     // },
-})
+}, {timestamps:true})
 
 // EventSchema.pre('save', function (next) {
 //     this.updatedAt = Date.now()
@@ -67,4 +67,4 @@ const EventSchema = new Schema({
 
 const EventModel = mongoose.model('Event', EventSchema)
 
-module.exports = EventModel
+export default EventModel

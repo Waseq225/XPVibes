@@ -1,13 +1,15 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const Ticket = require('../models/Events');
-const router = express.Router();
+import { Router } from 'express'
+import jwt from 'jsonwebtoken'
+import  EventModel  from '../models/Events.js'
 
-const jwtSecret = 'kjfhdsabfnlsinc123olidfjpioasdc23';
+
+const router = Router()
+
+const jwtSecret = 'kjfhdsabfnlsinc123olidfjpioasdc23'
 
 // Add Event endpoint
 router.post('/addevent', async (req, res) => {
-    const { token } = req.cookies;
+    const { token } = req.cookies
     const {
         title,
         venue,
@@ -18,13 +20,13 @@ router.post('/addevent', async (req, res) => {
         categories,
         price,
         ticketsAvailable,
-    } = req.body;
+    } = req.body
 
     if (token) {
         jwt.verify(token, jwtSecret, {}, async (err, userData) => {
-            if (err) throw err;
+            if (err) throw err
 
-            Ticket.create({
+            EventModel.create({
                 title,
                 venue,
                 photos,
@@ -36,18 +38,19 @@ router.post('/addevent', async (req, res) => {
                 price,
                 ticketsAvailable,
             })
-            .then(EventDoc => res.json(EventDoc))
-            .catch(exception => res.status(422).json(exception));
-        });
+                .then((EventDoc) => res.json(EventDoc))
+                .catch((exception) => res.status(422).json(exception))
+        })
     } else {
-        throw new Error('Login first');
+        throw new Error('Login first')
     }
-});
+})
 
 // Homepage Events endpoint
 router.get('/getevent', async (req, res) => {
-    const events = await Ticket.find();
-    res.json(events);
-});
+    const events = await EventModel.find()
+    res.json(events)
+})
 
-module.exports = router;
+export default router
+
