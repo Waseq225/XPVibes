@@ -1,16 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import { Box, Button, TextField, Typography } from "@mui/material";
 
 export const RegisterPage = () => {
 
-
+    const navigate = useNavigate()
     const registerUser = async (ev) => {
 
         ev.preventDefault();
         const email = ev.target.elements.email.value
         const username = ev.target.elements.username.value
         const password = ev.target.elements.password.value
+       
 
         axios.post('/auth/register', {
             name: username,
@@ -18,7 +19,10 @@ export const RegisterPage = () => {
             email
         }).then(() => {
             alert('Registration successful')
-        }).catch((e) => alert(e.message)
+            navigate ('/login')
+        }).catch((e) => {
+            alert(e.message)
+        }
         )
 
     }
@@ -47,7 +51,7 @@ export const RegisterPage = () => {
                             type="password"
                             variant="outlined"
                         />
-                        <Button type='submit' form='registerform' variant="contained"> Register </Button>
+                        <Button type='submit' form='registerform' variant="contained" > Register </Button>
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', paddingTop: '1rem' }}>
                             <Typography>Already have an account?</Typography>
                             <Link to={'/login'}>

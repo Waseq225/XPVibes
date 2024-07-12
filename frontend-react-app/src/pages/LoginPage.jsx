@@ -1,17 +1,17 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     Box,
     Button,
     TextField,
     Typography
 } from '@mui/material';
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import axios from "axios";
 import { UserContext } from "../userContext";
 
 export const LoginPage = () => {
+    const navigate = useNavigate()
 
-    const [redirect, setRedirect] = useState()
     const { setUser } = useContext(UserContext);
     const handleLoginSubmit = async (ev) => {
         ev.preventDefault();
@@ -21,15 +21,13 @@ export const LoginPage = () => {
         axios.post('/auth/login', { email, password }).then(({ data }) => {
             setUser(data)
             alert('Login successful')
-            setRedirect(true)
+            navigate ('/')
         }).catch((e) =>
             alert('Login failed' + e)
         )
 
     }
-    if (redirect) {
-        return <Navigate to={'/'} />
-    }
+
     return (
         <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'center', marginTop: '5rem' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '450px' }}>
