@@ -134,15 +134,20 @@ export const Hamburger = () => {
                 </MenuItem>
 
                 {user ? (
-                    <>
-                        <Divider sx={{ my: 0.5 }} />
-                        <Link to={'logout'}>
-                            <MenuItem onClick={handleClose}>
-                                <HelpOutline />
-                                Sign Out
-                            </MenuItem>
-                        </Link>
-                    </>
+
+                    <Divider sx={{ my: 0.5 }} />
+
+                ) : null}
+                {user ? (
+
+
+                    <Link to={'logout'}>
+                        <MenuItem onClick={handleClose}>
+                            <HelpOutline />
+                            Sign Out
+                        </MenuItem>
+                    </Link>
+
                 ) : null}
             </StyledMenu>
         </div>
