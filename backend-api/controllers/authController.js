@@ -1,14 +1,13 @@
 import UserModel from '../models/Users.js'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-
+import { errorHandler } from '../utils/errors.js'
 
 const jwtSecret = 'kjfhdsabfnlsinc123olidfjpioasdc23'
 const bcryptSalt = bcryptjs.genSaltSync(10)
 
-
 //REGISTER
-export const register =  async (req, res) => {
+export const register = async (req, res, next) => {
     const { name, email, password } = req.body
 
     UserModel.create({
@@ -17,7 +16,12 @@ export const register =  async (req, res) => {
         password: bcryptjs.hashSync(password, bcryptSalt),
     })
         .then((userDoc) => res.json(userDoc))
-        .catch((exception) => res.status(422).json(exception))
+        .catch((exception) => {
+            if (exception.code === 11000)
+                next(errorHandler(422, 'Already registered email'))
+            
+        })
+
 }
 
 //LOGIN
