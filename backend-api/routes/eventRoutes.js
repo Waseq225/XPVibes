@@ -2,10 +2,8 @@ import { Router } from 'express'
 import jwt from 'jsonwebtoken'
 import  EventModel  from '../models/Events.js'
 
-
 const router = Router()
 
-const jwtSecret = 'kjfhdsabfnlsinc123olidfjpioasdc23'
 
 // Add Event endpoint
 router.post('/addevent', async (req, res) => {
@@ -23,7 +21,7 @@ router.post('/addevent', async (req, res) => {
     } = req.body
 
     if (token) {
-        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
             if (err) throw err
 
             EventModel.create({

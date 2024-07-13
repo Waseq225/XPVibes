@@ -1,10 +1,10 @@
 import { useContext, useEffect } from 'react'
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { UserContext } from '../userContext';
 
 export const LogoutPage = () => {
-
+    const navigate = useNavigate()
     const { user, setUser } = useContext(UserContext);
 
     useEffect(() => {
@@ -17,8 +17,5 @@ export const LogoutPage = () => {
                 )
         }
     }, [setUser, user])
-
-    return (
-        <Navigate to={'/'} />
-    )
+    navigate ('/')
 }

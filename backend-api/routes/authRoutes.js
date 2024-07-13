@@ -5,8 +5,6 @@ import { login, logout, register } from '../controllers/authController.js'
 
 const router = express.Router()
 
-const jwtSecret = 'kjfhdsabfnlsinc123olidfjpioasdc23'
-
 // Register endpoint
 router.post('/register',register)
 
@@ -20,7 +18,7 @@ router.post('/logout', logout)
 router.get('/profile', async (req, res) => {
     const { token } = req.cookies
     if (token) {
-        jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+        jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
             if (err) throw err
             const { name, email, _id } = await UserModel.findById(userData.id)
             res.json({ name, email, _id })

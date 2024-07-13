@@ -3,7 +3,6 @@ import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { errorHandler } from '../utils/errors.js'
 
-const jwtSecret = 'kjfhdsabfnlsinc123olidfjpioasdc23'
 const bcryptSalt = bcryptjs.genSaltSync(10)
 
 //REGISTER
@@ -19,7 +18,7 @@ export const register = async (req, res, next) => {
         .catch((exception) => {
             if (exception.code === 11000)
                 next(errorHandler(422, 'Already registered email'))
-            
+
         })
 
 }
@@ -28,17 +27,19 @@ export const register = async (req, res, next) => {
 export const login = async (req, res) => {
     const { email, password } = req.body
     const userDoc = await UserModel.findOne({ email })
-
+    
     if (userDoc) {
         const passOk = bcryptjs.compareSync(password, userDoc.password)
         if (passOk) {
             jwt.sign(
                 { email: userDoc.email, id: userDoc._id },
-                jwtSecret,
+                process.env.JWT_SECRET,
                 {},
                 (error, token) => {
                     if (error) throw error
-                    res.cookie('token', token).json(userDoc)
+                    res
+                    .cookie('token', token, {httpOnly: true})
+                    .json(userDoc)
                 }
             )
         } else {

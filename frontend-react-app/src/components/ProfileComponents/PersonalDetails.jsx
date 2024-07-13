@@ -1,7 +1,7 @@
 // import React from 'react'
 
 import { Box, Button, TextField, Typography } from "@mui/material"
-import { Link } from "react-router-dom"
+
 
 export const PersonalDetails = () => {
     return (
@@ -32,14 +32,6 @@ export const PersonalDetails = () => {
                             type="password"
                             variant="outlined"
                         />
-                        <Button
-                            type='submit' form='registerform' variant="contained"> Register </Button>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', paddingTop: '1rem' }}>
-                            <Typography>Already have an account?</Typography>
-                            <Link to={'/login'}>
-                                <Typography sx={{ textDecoration: 'underline' }}>Login</Typography>
-                            </Link>
-                        </Box>
                     </Box>
                 </form>
             </Box>
