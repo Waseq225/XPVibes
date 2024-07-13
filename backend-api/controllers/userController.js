@@ -1,3 +1,6 @@
+import UserModel from '../models/Users.js'
+import jwt from 'jsonwebtoken'
+
 export const userProfile = async (req, res) => {
     const { token } = req.cookies
     if (token) {

@@ -1,6 +1,6 @@
 import { alpha, styled } from '@mui/material/styles';
 import React, { useContext } from 'react';
-// import axios from 'axios'
+import axios from 'axios'
 import {
     AccountBox,
     HelpOutline,
@@ -14,7 +14,7 @@ import {
     Menu,
     MenuItem
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../userContext';
 
 
@@ -62,7 +62,8 @@ const StyledMenu = styled((props) => (
 
 export const Hamburger = () => {
 
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
@@ -73,6 +74,19 @@ export const Hamburger = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleLogout = () => {
+        if (user) {
+            axios.post('/auth/logout')
+                .then(() => {
+                    setUser(null)
+                }).catch((e) =>
+                    alert('Logout failed' + e)
+                )
+        }
+        handleClose()
+        navigate('/')
+    }
 
 
     return (
@@ -134,19 +148,14 @@ export const Hamburger = () => {
                 </MenuItem>
 
                 {user ? (
-
                     <Divider sx={{ my: 0.5 }} />
-
                 ) : null}
                 {user ? (
 
-
-                    <Link to={'logout'}>
-                        <MenuItem onClick={handleClose}>
-                            <HelpOutline />
-                            Sign Out
-                        </MenuItem>
-                    </Link>
+                    <MenuItem onClick={handleLogout}>
+                        <HelpOutline />
+                        Sign Out
+                    </MenuItem>
 
                 ) : null}
             </StyledMenu>
