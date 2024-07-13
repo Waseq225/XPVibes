@@ -2,10 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import {
     Box,
     Button,
+    CircularProgress,
     TextField,
     Typography
 } from '@mui/material';
-import { useContext} from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../userContext";
 
@@ -13,17 +14,21 @@ export const LoginPage = () => {
     const navigate = useNavigate()
 
     const { setUser } = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
     const handleLoginSubmit = async (ev) => {
         ev.preventDefault();
         const email = ev.target.elements.email.value
         const password = ev.target.elements.password.value
-
+        setLoading(true)
         axios.post('/auth/login', { email, password }).then(({ data }) => {
             setUser(data)
-            alert('Login successful')
-            navigate ('/')
-        }).catch((e) =>
+            setLoading(false)
+            navigate('/')
+        }).catch((e) => {
+            setLoading(false)
             alert('Login failed' + e)
+        }
+
         )
 
     }
@@ -48,7 +53,13 @@ export const LoginPage = () => {
                             type="password"
                             variant="outlined"
                         />
-                        <Button type='submit' form='loginform' variant="contained"> Login </Button>
+
+                        {loading ?
+                            <Button disabled variant="contained"><CircularProgress /> </Button>
+                            :
+                            <Button type='submit' form='loginform' variant="contained"> Login </Button>
+                        }
+                        {/* <Button type='submit' form='loginform' variant="contained"> Login </Button> */}
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', paddingTop: '1rem' }}>
                             <Typography>Don`t have an account yet? </Typography>
                             <Link to={'/register'}>

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Box, Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
+import { EventItem } from './EventItem/EventItem'
 
 export const EventGrid = () => {
     const [events, setEvents] = useState([])
@@ -9,6 +10,7 @@ export const EventGrid = () => {
         axios
             .get('/events/getevent')
             .then((res) => {
+              
                 setEvents(res.data)
             })
             .catch((e) => alert(e.message))
@@ -28,7 +30,6 @@ export const EventGrid = () => {
                     display: 'flex',
                     flexDirection: 'column',
                     gap: '1rem',
-                    width: '450px',
                 }}
             >
                 <Typography variant="h1" textAlign={'center'}>
@@ -38,17 +39,20 @@ export const EventGrid = () => {
                 <Box
                     sx={{
                         display: 'flex',
-                        flexDirection: 'column',
+                        flexWrap: 'wrap',
                         gap: '0.5rem',
                     }}
                 >
+
                     {events
-                        ? events.map(({ _id, title }) => (
-                            <li key={_id}>{title}</li>
+                        ? events.map((event) => (
+                            <EventItem key={event._id} event={event} />
                         ))
                         : null}
                 </Box>
             </Box>
         </Box>
+
+
     )
 }
