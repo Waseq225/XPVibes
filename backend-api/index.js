@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import authRoutes from './routes/authRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 dotenv.config()
 
 const app = express()
@@ -26,6 +27,7 @@ mongoose.connect(process.env.MONGO_URL)
 // Use routes
 app.use('/auth', authRoutes)
 app.use('/events', eventRoutes)
+app.use('/user', userRoutes)
 
 app.listen(4000, () => {
     console.log('Server is running on port 4000')

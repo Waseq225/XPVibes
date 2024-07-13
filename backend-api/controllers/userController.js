@@ -1,4 +1,4 @@
-export default userProfile = async (req, res) => {
+export const userProfile = async (req, res) => {
     const { token } = req.cookies
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
