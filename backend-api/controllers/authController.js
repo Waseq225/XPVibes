@@ -46,7 +46,7 @@ export const login = async (req, res) => {
             res.status(422).json('wrong password')
         }
     } else {
-        res.json('not found')
+        res.json('User not found')
     }
 }
 
