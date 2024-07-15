@@ -12,6 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
 import { AddEvent } from './pages/AddEvent.jsx'
 import { EventGrid } from './components/EventGrid/EventGrid.jsx'
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute.jsx'
 
 axios.defaults.baseURL = "http://localhost:4000"
 axios.defaults.withCredentials = true
@@ -25,10 +26,12 @@ function App() {
           <Nav />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/cart" element={<Cart />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
-            <Route path='/profile' element={<ProfilePage />} />
+            <Route element={<PrivateRoute />} >
+              <Route path='/profile' element={<ProfilePage />} />
+              <Route path="/cart" element={<Cart />} />
+            </Route>
             <Route path='/addevent' element={<AddEvent />} /> {/* Change this route */}
             <Route path='/getevent' element={<EventGrid />} />  {/* Change this route */}
           </Routes>
