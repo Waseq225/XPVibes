@@ -3,10 +3,25 @@ import mongoose, {Schema} from 'mongoose'
 //Standardize schemas
 
 const UserSchema = new Schema({
-    name: String,
-    email: { type: String, unique: true },
-    password: String,
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+      },
 
+    email: { 
+        type: String, 
+        unique: true },
+
+    password: {
+        type: String,
+        required: true,
+      },
+
+    avatar:{
+        type: String,
+        default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+      },
     // phone or gmail/facebook/IG(firebase):
     // NID in profile completion for PG-18 events
 }, {timestamps:true})

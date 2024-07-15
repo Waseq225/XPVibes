@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import {
     Box,
-    Button,
     CircularProgress,
     TextField,
     Typography
@@ -9,6 +8,8 @@ import {
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../userContext";
+import OAuth from "../components/OAuth/OAuth";
+import { AuthButton } from "../components/CustomButton/AuthButton";
 
 export const LoginPage = () => {
     const navigate = useNavigate()
@@ -55,11 +56,11 @@ export const LoginPage = () => {
                         />
 
                         {loading ?
-                            <Button disabled variant="contained"><CircularProgress /> </Button>
+                            <AuthButton disabled ><CircularProgress /> </AuthButton>
                             :
-                            <Button type='submit' form='loginform' variant="contained"> Login </Button>
+                            <AuthButton type='submit' form='loginform'> Login </AuthButton>
                         }
-                        {/* <Button type='submit' form='loginform' variant="contained"> Login </Button> */}
+                        <OAuth/>
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', paddingTop: '1rem' }}>
                             <Typography>Don`t have an account yet? </Typography>
                             <Link to={'/register'}>

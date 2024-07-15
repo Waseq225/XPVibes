@@ -1,6 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
+import OAuth from "../components/OAuth/OAuth";
+import { AuthButton } from "../components/CustomButton/AuthButton";
 
 export const RegisterPage = () => {
 
@@ -51,7 +53,8 @@ export const RegisterPage = () => {
                             type="password"
                             variant="outlined"
                         />
-                        <Button type='submit' form='registerform' variant="contained" > Register </Button>
+                        <AuthButton type='submit' form='registerform' > Register </AuthButton>
+                        <OAuth/>
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px', paddingTop: '1rem' }}>
                             <Typography>Already have an account?</Typography>
                             <Link to={'/login'}>

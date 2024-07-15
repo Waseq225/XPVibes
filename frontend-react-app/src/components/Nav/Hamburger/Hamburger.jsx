@@ -1,22 +1,23 @@
 import { alpha, styled } from '@mui/material/styles';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios'
 import {
-    AccountBox,
+    Close,
     HelpOutline,
     Menu as MenuIcon,
     Person,
     Receipt
 } from '@mui/icons-material';
 import {
+    Avatar,
     Divider,
     IconButton,
     Menu,
-    MenuItem
+    MenuItem,
+    Snackbar
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../userContext';
-
 
 // Change specific css here for the popup menu
 const StyledMenu = styled((props) => (
@@ -64,7 +65,9 @@ export const Hamburger = () => {
 
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate()
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [toastOpen, setToastOpen] = useState(false);
+
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -75,11 +78,16 @@ export const Hamburger = () => {
         setAnchorEl(null);
     };
 
+    const handleToastClose = () => {
+        setToastOpen(false);
+
+    };
     const handleLogout = () => {
         if (user) {
             axios.post('/auth/logout')
                 .then(() => {
                     setUser(null)
+                    setToastOpen(true)
                 }).catch((e) =>
                     alert('Logout failed' + e)
                 )
@@ -121,7 +129,10 @@ export const Hamburger = () => {
             >
                 {user ?
                     (<Link to={'profile'}><MenuItem onClick={handleClose}>
-                        <AccountBox />
+                        <Avatar alt="Remy Sharp"
+                            sx={{ width: 24, height: 24, marginRight: 1 }}
+                            src={user.avatar}
+                        />
                         {user.name}&apos;s Profile
                     </MenuItem></Link>)
                     : (<Link to={'login'}>
@@ -159,6 +170,22 @@ export const Hamburger = () => {
 
                 ) : null}
             </StyledMenu>
+            <Snackbar
+                anchorOrigin={{vertical:'bottom',  horizontal: 'right'}}
+                open={toastOpen}
+                autoHideDuration={5000}
+                onClose={handleToastClose}
+                message="Signed out successfully"
+                action = { <IconButton
+                    size="small"
+                    aria-label="close"
+                    color="inherit"
+                    onClick={handleToastClose}
+                  >
+                    <Close fontSize="small" />
+                  </IconButton>}
+              
+            />
         </div>
     );
 }

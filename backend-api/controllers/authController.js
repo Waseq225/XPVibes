@@ -54,3 +54,43 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
     res.cookie('token', '').json(true)
 }
+
+
+//GOOGLE
+export const google = async(req, res) =>{
+    const userDoc = await UserModel.findOne({ email: req.body.email })
+    if (userDoc) {
+        jwt.sign(
+            { email: userDoc.email, id: userDoc._id },
+            process.env.JWT_SECRET,
+            {},
+            (error, token) => {
+                if (error) throw error
+                res
+                .cookie('token', token, {httpOnly: true})
+                .json(userDoc)
+            }
+        )
+    }else {
+       const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8)
+       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10)
+       const newUser = new UserModel({name: req.body.name,
+                    email: req.body.email, 
+                    password: hashedPassword,
+                    avatar: req.body.photo})
+        await newUser.save()
+        if (newUser) {
+            jwt.sign(
+                { email: newUser.email, id: newUser._id },
+                process.env.JWT_SECRET,
+                {},
+                (error, token) => {
+                    if (error) throw error
+                    res
+                    .cookie('token', token, {httpOnly: true})
+                    .json(newUser)
+                }
+            )
+    }
+}
+}
