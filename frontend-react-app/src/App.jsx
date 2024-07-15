@@ -7,7 +7,6 @@ import { LoginPage } from './pages/LoginPage.jsx'
 import axios from "axios"
 import { UserContextProvider } from './userContext.jsx'
 import { ProfilePage } from './pages/ProfilePage.jsx'
-
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
 import { AddEvent } from './pages/AddEvent.jsx'
@@ -32,8 +31,10 @@ function App() {
               <Route path='/profile' element={<ProfilePage />} />
               <Route path="/cart" element={<Cart />} />
             </Route>
+
             <Route path='/addevent' element={<AddEvent />} /> {/* Change this route */}
             <Route path='/getevent' element={<EventGrid />} />  {/* Change this route */}
+
           </Routes>
         </>
       </UserContextProvider>

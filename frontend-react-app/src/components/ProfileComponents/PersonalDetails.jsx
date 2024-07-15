@@ -2,6 +2,9 @@ import React, { useEffect, useContext } from 'react'
 import { Grid, Paper, Typography, TextField, Button} from '@mui/material';
 import axios from 'axios';
 import { UserContext } from '../../userContext';
+import { PaymentDetails } from './PaymentDetails';
+import { OrderHistory } from './OrderHistory';
+import { DeleteAccount } from './DeleteAccount';
 
 export const PersonalDetails = () => {
     const {user, setUser} = useContext(UserContext)
@@ -17,13 +20,12 @@ export const PersonalDetails = () => {
     <Grid container spacing={3} style={{ padding: '2rem' }}>
       <Grid item xs={12} md={3}>
         <Paper style={{ padding: '1rem' }}>
-          <Typography variant="h5" gutterBottom >Personal details</Typography>
+          <Typography variant="h5" gutterBottom >Personal Details</Typography>
           <ul>
-            <li>Order history</li>  
-            <li>Payment details</li>
-            <li>Favourites</li>
+            <li><OrderHistory/></li>  
+            <li><PaymentDetails/></li>
             <li>Password</li>
-            <li>Cancel account</li>
+            <li><DeleteAccount/></li>
           </ul>
         </Paper>
       </Grid>
