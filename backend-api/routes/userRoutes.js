@@ -3,7 +3,11 @@ import { userProfile } from '../controllers/userController.js'
 
 const router = express.Router()
 
-// Profile endpoint
-router.get('/profile', userProfile)
+// Profile Details endpoint
+router.get('/profileDetails', userProfile)
+
+// Profile payement endpoint
+
+
 
 export default router

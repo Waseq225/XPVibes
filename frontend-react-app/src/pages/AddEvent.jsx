@@ -3,16 +3,10 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { useState } from "react";
 
-
 export const AddEvent = () => {
 
-    
     const [startDate, setStartDate] = useState(null)
-
-
-
     const stringFields = [
-
         "title",
         "venue",
         "description",
