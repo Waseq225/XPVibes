@@ -32,7 +32,7 @@ export default function OAuth() {
     }
 
     return (
-        <AuthButton
+        <AuthButton onClick={handleGoogleClick}
             color='error'
         >
             Continue with Google
