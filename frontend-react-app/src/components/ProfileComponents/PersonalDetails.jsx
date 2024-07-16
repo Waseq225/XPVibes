@@ -16,6 +16,7 @@ export const PersonalDetails = () => {
       })
       .catch((e) => alert(e.message))
   }, [])
+
   return (
     <Grid container spacing={3} style={{ padding: '2rem' }}>
       <Grid item xs={12} md={3}>
@@ -32,10 +33,6 @@ export const PersonalDetails = () => {
       <Grid item xs={12} md={9}>
         <Paper style={{ padding: '2rem' }}>
           <Typography variant="h4" gutterBottom >{user.name}</Typography>
-          <Avatar
-            sx={{ width: 24, height: 24, marginRight: 1 }}
-            src={user.avatar}
-          />
           <Typography variant="subtitle1" gutterBottom>ID?</Typography>
           <form noValidate autoComplete="off">
             <Grid container spacing={3}>

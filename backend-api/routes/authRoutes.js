@@ -11,7 +11,7 @@ router.post('/register',register)
 router.post('/login', login)
 
 // Logout endpoint
-router.post('/logout', logout)
+router.get('/logout', logout)
 
 // Google endpoint
 router.post('/google', google)

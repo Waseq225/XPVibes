@@ -84,7 +84,7 @@ export const Hamburger = () => {
     };
     const handleLogout = () => {
         if (user) {
-            axios.post('/auth/logout')
+            axios.get('/auth/logout')
                 .then(() => {
                     setUser(null)
                     setToastOpen(true)
@@ -129,7 +129,7 @@ export const Hamburger = () => {
             >
                 {user ?
                     (<Link to={'profile'}><MenuItem onClick={handleClose}>
-                        <Avatar alt="Remy Sharp"
+                        <Avatar
                             sx={{ width: 24, height: 24, marginRight: 1 }}
                             src={user.avatar}
                         />
