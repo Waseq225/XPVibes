@@ -25,8 +25,8 @@ export const ProfilePage = () => {
         //     <Grid item xs={12} md={9}></Grid>
 
         // </Grid>
-<form><PermanentDrawer/>
-       </form>
+<PermanentDrawer/>
+   
 
     )
 }
