@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { HomePage } from './pages/HomePage.jsx'
 import { Cart } from './pages/Cart.jsx'
-import { Nav } from './components/Nav/Nav.jsx'
+import { Navbar } from './components/Nav/Navbar.jsx'
 import { RegisterPage } from './pages/RegisterPage.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
 import axios from "axios"
@@ -22,7 +22,7 @@ function App() {
     <LocalizationProvider dateAdapter={AdapterLuxon}>
       <UserContextProvider>
         <>
-          <Nav />
+          <Navbar />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path='/login' element={<LoginPage />} />

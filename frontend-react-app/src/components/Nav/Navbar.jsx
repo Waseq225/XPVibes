@@ -12,8 +12,7 @@ import { Hamburger } from './Hamburger/Hamburger';
 import { SearchBar } from './SearchBar/SearchBar';
 
 
-
-export const Nav = () => {
+export const Navbar = () => {
     const location = useLocation();
     const { pathname } = location;
     const shouldHideSearch = pathname === '/login' || pathname === '/register';
