@@ -8,7 +8,7 @@ export function UserContextProvider({ children }) {
     const [userLoading, setUserLoading] = useState(true)
     useEffect(() => {
         if (!user) {
-            axios.get('/user/profileDetails')
+            axios.get('/user/profile')
                 .then(({ data }) => {
                     setUser(data)
                     setUserLoading(false)

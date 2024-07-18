@@ -1,13 +1,13 @@
 import express from 'express'
-import { userProfile } from '../controllers/userController.js'
+import { updateUser, userProfile } from '../controllers/userController.js'
 
 const router = express.Router()
 
-// Profile Details endpoint
-router.get('/profileDetails', userProfile)
+// Profile endpoint
+router.get('/profile', userProfile)
 
-// Profile payement endpoint
-
+// Profile details endpoint
+router.post('/update/:id', updateUser)
 
 
 export default router
