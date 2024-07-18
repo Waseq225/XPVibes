@@ -1,4 +1,4 @@
-import { Avatar, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import {
   getDownloadURL,
@@ -14,12 +14,11 @@ import { app } from '../../firebase.js';
 export const PersonalDetails = () => {
   const { user, setUser } = useContext(UserContext)
   const fileRef = useRef(null)
-  // const [file, setFile] = useState(undefined);
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
     axios
-      .get('/user/profileDetails')
+      .get('/user/profile')
       .then(({ data }) => {
         setUser(data)
 
@@ -56,7 +55,7 @@ export const PersonalDetails = () => {
   const avatarSrc = useMemo(() => formData.avatar || user.avatar, [formData, user])
 
   return (
-    <Paper style={{ padding: '2rem' }}>
+    <Box>
       <Typography variant="h4" gutterBottom >{user.name}</Typography>
       <Avatar onClick={() => fileRef.current.click()}
         src={avatarSrc}
@@ -68,8 +67,9 @@ export const PersonalDetails = () => {
         hidden
         accept="image/*" />
       <Typography variant="subtitle1" gutterBottom>ID?</Typography>
+
       <form noValidate autoComplete="off">
-        <Grid container spacing={3}>
+        <Grid container spacing={3} >
           <Grid item xs={12} sm={6}>
             <TextField fullWidth label="Email address" required />
           </Grid>
@@ -102,7 +102,7 @@ export const PersonalDetails = () => {
           </Grid>
         </Grid>
       </form>
-    </Paper>
+    </Box>
   );
 }
 
