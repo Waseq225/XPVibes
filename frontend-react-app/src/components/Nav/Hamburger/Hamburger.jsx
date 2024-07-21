@@ -63,7 +63,7 @@ const StyledMenu = styled((props) => (
 
 export const Hamburger = () => {
 
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser, setHasOrganizerPermission } = useContext(UserContext);
     const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = useState(null);
     const [toastOpen, setToastOpen] = useState(false);
@@ -87,6 +87,7 @@ export const Hamburger = () => {
             axios.get('/auth/logout')
                 .then(() => {
                     setUser(null)
+                    setHasOrganizerPermission(false)
                     setToastOpen(true)
                 }).catch((e) =>
                     alert('Logout failed' + e)
@@ -99,19 +100,22 @@ export const Hamburger = () => {
 
     return (
         <div>
-            <IconButton id="demo-customized-button"
-                aria-controls={open ? 'demo-customized-menu' : undefined}
+            <IconButton id="dropdown-button"
+                aria-controls={open ? 'dropdown-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 variant="contained"
                 onClick={handleClick}
+                size='large'
+                edge='end'
+                color='inherit'
             >
                 <MenuIcon />
             </IconButton>
             <StyledMenu
-                id="demo-customized-menu"
+                id="dropdown-menu"
                 MenuListProps={{
-                    'aria-labelledby': 'demo-customized-button',
+                    'aria-labelledby': 'dropdown-button',
                 }}
                 anchorEl={anchorEl}
                 open={open}
@@ -171,20 +175,20 @@ export const Hamburger = () => {
                 ) : null}
             </StyledMenu>
             <Snackbar
-                anchorOrigin={{vertical:'bottom',  horizontal: 'right'}}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 open={toastOpen}
                 autoHideDuration={5000}
                 onClose={handleToastClose}
                 message="Signed out successfully"
-                action = { <IconButton
+                action={<IconButton
                     size="small"
                     aria-label="close"
                     color="inherit"
                     onClick={handleToastClose}
-                  >
+                >
                     <Close fontSize="small" />
-                  </IconButton>}
-              
+                </IconButton>}
+
             />
         </div>
     );

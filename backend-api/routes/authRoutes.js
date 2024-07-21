@@ -1,5 +1,5 @@
 import express from 'express'
-import { google, login, logout, register } from '../controllers/authController.js'
+import { checkPermission, google, login, logout, register } from '../controllers/authController.js'
 import RolesModel from '../models/Roles.js'
 
 const router = express.Router()
@@ -26,6 +26,9 @@ router.post('/google', google)
 //         .then((EventDoc) => res.json(EventDoc))
 //         .catch((exception) => res.status(422).json(exception))
 //
+
+
+router.get('/hasPermission/:permission', checkPermission)
 
 
 export default router
