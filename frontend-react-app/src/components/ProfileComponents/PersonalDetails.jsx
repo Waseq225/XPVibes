@@ -1,109 +1,151 @@
-import { Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material';
-import axios from 'axios';
+import { Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material'
+import axios from 'axios'
 import {
   getDownloadURL,
   getStorage,
   ref,
-  uploadBytesResumable
-} from 'firebase/storage';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { UserContext } from '../../userContext';
+  uploadBytesResumable,
+} from 'firebase/storage'
 
-import { app } from '../../firebase.js';
+import { DatePicker } from '@mui/x-date-pickers'
+import { useContext, useRef, useState } from 'react'
+import { UserContext } from '../../userContext'
+import { app } from '../../firebase.js'
+import { DateTime } from 'luxon'
 
 export const PersonalDetails = () => {
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
+
   const fileRef = useRef(null)
-  const [formData, setFormData] = useState({});
+  const [avatarUrl, setAvatarUrl] = useState(user.avatar)
+  const [name, setName] = useState(user.name)
+  const [dob, setDob] = useState(DateTime.fromISO(user.dob))
+  const [email, setEmail] = useState(user.email)
+  const [phone, setPhone] = useState(user.phone)
 
-  useEffect(() => {
+  console.log(dob)
+
+  const handleClick = async (ev) => {
+    ev.preventDefault()
+
     axios
-      .get('/user/profile')
-      .then(({ data }) => {
-        setUser(data)
-
+      .post(`/user/update/${user._id}`, {
+        email,
+        name,
+        dob,
+        phone,
+        avatar: avatarUrl,
       })
-      .catch((e) => alert(e.message))
-  }, [setUser])
-
+      .then(() => {
+        alert('Updated!')
+      })
+      .catch((e) => {
+        alert(e.message)
+      })
+  }
 
   const handleFileUpload = (file) => {
-    if (!file) { return }
-    const storage = getStorage(app);
-    const fileName = new Date().getTime() + file.name;
-    const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    if (!file) {
+      return
+    }
+    const storage = getStorage(app)
+    const fileName = new Date().getTime() + file.name
+    const storageRef = ref(storage, fileName)
+    const uploadTask = uploadBytesResumable(storageRef, file)
 
     uploadTask.on(
       'state_changed',
       (snapshot) => {
         const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(Math.round(progress));
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        console.log(Math.round(progress))
       },
       (error) => {
         console.log(error)
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
-          setFormData((priordata) => { return { ...priordata, avatar: downloadURL } })
-        );
+          setAvatarUrl(downloadURL)
+        )
       }
-    );
-  };
-
-  const avatarSrc = useMemo(() => formData.avatar || user.avatar, [formData, user])
+    )
+  }
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom >{user.name}</Typography>
-      <Avatar onClick={() => fileRef.current.click()}
-        src={avatarSrc}
-        alt='profile' />
+      <Typography variant="h4" gutterBottom>
+        {user.name}
+      </Typography>
+      <Avatar
+        onClick={() => fileRef.current.click()}
+        src={avatarUrl}
+        alt="profile"
+        sx={{ marginBottom: 3 }}
+      />
       <input
         onChange={(e) => handleFileUpload(e.target.files[0])}
-        type='file'
+        type="file"
         ref={fileRef}
         hidden
-        accept="image/*" />
-      <Typography variant="subtitle1" gutterBottom>ID?</Typography>
+        accept="image/*"
+      />
 
-      <form noValidate autoComplete="off">
-        <Grid container spacing={3} >
+      <form
+        id="personalDetails"
+        onSubmit={handleClick}
+        autoComplete="off"
+      >
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="Email address" required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="First Name" required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="Last Name" required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="Date of Birth" type="date" InputLabelProps={{ shrink: true }} required />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="Mobile phone" required />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <TextField fullWidth label="Address line 1" required />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <TextField fullWidth label="Address line 2" />
+            <TextField
+              id="email"
+              fullWidth
+              label="Email address"
+              onChange={(ev) => setEmail(ev.target.value)}
+              value={email}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="Suburb" required />
+            <TextField
+              id="name"
+              fullWidth
+              label="Name"
+              onChange={(ev) => setName(ev.target.value)}
+              value={name}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label="Country Code" required />
+            <DatePicker
+              sx={{ width: '100%' }}
+              label="Date of Birth"
+              value={dob}
+              onChange={(newValue) => setDob(newValue)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              id="phone"
+              label="Mobile phone"
+              onChange={(ev) => setPhone(ev.target.value)}
+              value={phone}
+              InputLabelProps={{ shrink: true }}
+            />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="primary">Save</Button>
+            <Button
+              type="submit"
+              form="personalDetails"
+              variant="contained"
+              color="primary"
+            >
+              Save
+            </Button>
           </Grid>
         </Grid>
       </form>
     </Box>
-  );
+  )
 }
-
-
