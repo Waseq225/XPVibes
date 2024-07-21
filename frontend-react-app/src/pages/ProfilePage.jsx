@@ -8,18 +8,24 @@ import {
 } from '@mui/material'
 import { PersonalDetails } from "../components/ProfileComponents/PersonalDetails"
 import { OrderHistory } from "../components/ProfileComponents/OrderHistory"
+import { PaymentDetails } from "../components/ProfileComponents/PaymentDetails"
+import { DeleteAccount } from "../components/ProfileComponents/DeleteAccount"
+
 import PropTypes from 'prop-types'
 import * as React from 'react'
 
 
-const StyledTabs = styled(Tabs)(() => ({
+const StyledTabs = styled(Tabs)(({ theme }) => ({
     borderRight: 1,
     borderColor: 'divider',
     width: '20%',
     '& .MuiButtonBase-root': {
         textAlign: 'start',
-        alignContent: 'start'
-
+        alignContent: 'start',
+        '&.Mui-selected': {
+            backgroundColor: theme.palette.primary.dark,
+            color: theme.palette.common.white
+        }
     }
 }))
 
@@ -47,11 +53,9 @@ export const ProfilePage = () => {
                 >
                     <Tab label="Personal Details" {...a11yProps(0)} />
                     <Tab label="Order History" {...a11yProps(1)} />
-                    <Tab label="Item Three" {...a11yProps(2)} />
-                    <Tab label="Item Four" {...a11yProps(3)} />
-                    <Tab label="Item Five" {...a11yProps(4)} />
-                    <Tab label="Item Six" {...a11yProps(5)} />
-                    <Tab label="Item Seven" {...a11yProps(6)} />
+                    <Tab label="Payment Details" {...a11yProps(2)} />
+                    <Tab label="Delete Account" {...a11yProps(3)} />
+
                 </StyledTabs>
                 <TabPanel value={value} index={0}>
                     <PersonalDetails />
@@ -60,27 +64,18 @@ export const ProfilePage = () => {
                     <OrderHistory />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    Item Three
+                    <PaymentDetails />
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    Item Four
+                    <DeleteAccount />
                 </TabPanel>
-                <TabPanel value={value} index={4}>
-                    Item Five
-                </TabPanel>
-                <TabPanel value={value} index={5}>
-                    Item Six
-                </TabPanel>
-                <TabPanel value={value} index={6}>
-                    Item Seven
-                </TabPanel>
+
             </Card>
         </Box>
 
 
     )
 }
-
 
 
 function TabPanel(props) {
