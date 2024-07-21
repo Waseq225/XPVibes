@@ -1,56 +1,114 @@
 import {
+    Event,
     Science,
     ShoppingCart
 } from '@mui/icons-material';
 import {
+    AppBar,
     Box,
     IconButton,
-    Paper
+    InputBase,
+    Toolbar,
+    Typography,
+    styled
 } from '@mui/material';
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Hamburger } from './Hamburger/Hamburger';
-import { SearchBar } from './SearchBar/SearchBar';
+
+import SearchIcon from '@mui/icons-material/Search';
+import { useContext } from 'react';
+import { UserContext } from '../../userContext';
 
 
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+    },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    width: '100%',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        [theme.breakpoints.up('sm')]: {
+            width: '0ch',
+            '&:focus': {
+                width: '25ch',
+                borderBottom: '1px solid white'
+            },
+        },
+    },
+}));
+
+//convert to App bar
 export const Navbar = () => {
-    const location = useLocation();
-    const { pathname } = location;
-    const shouldHideSearch = pathname === '/login' || pathname === '/register';
+    const { hasOrganizerPermission } = useContext(UserContext);
+
 
     return (
-        <Paper
-            elevation={0}
-            sx={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: 'turquoise',
-                borderRadius: '0',
-                padding: '25px 15px'
-            }}>
-            <Link to={'/'}>
-                <Box>
-                    <Science />
-                </Box>
-            </Link>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar>
 
-            <Box sx={{ flexBasis: '50%' }}>
-                {shouldHideSearch ? null : <SearchBar />}
-            </Box>
-            <Box sx={{
-                display: 'flex',
+                    <Box
+                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+                        <Link to={'/'} style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                            <Science />
+                            <Typography
+                                variant="h6"
+                                noWrap
+                                component="div"
 
-            }}>
-                <Link to={'/cart'}>
-                    <IconButton id="demo-customized-button"
-                        variant="contained"
-                    >
-                        <ShoppingCart />
-                    </IconButton>
-                </Link>
-                <Hamburger />
-            </Box>
-        </Paper>
+                            >
+                                Vibology
+                            </Typography>
+                        </Link>
+                    </Box>
+
+                    <Search>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                        </SearchIconWrapper>
+                        <StyledInputBase
+                            placeholder="Search…"
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
+                    </Search>
+                    {hasOrganizerPermission ? <Link to={'/addevent'}>
+                        <IconButton color='inherit'
+                            variant="contained"
+                        >
+                            < Event />
+                        </IconButton>
+                    </Link> : null}
+                    <Link to={'/cart'}>
+                        <IconButton color='inherit'
+                            variant="contained"
+                        >
+                            <ShoppingCart />
+                        </IconButton>
+                    </Link>
+                    <Hamburger />
+                </Toolbar>
+            </AppBar>
+        </Box>
     );
 }
