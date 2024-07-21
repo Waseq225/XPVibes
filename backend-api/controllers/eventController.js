@@ -19,10 +19,12 @@ export const addEvent = async (req, res) => {
         jwt.verify(token, process.env.JWT_SECRET, {}, async (err, userData) => {
             if (err) throw err
 
+            const photosToPass = photos.length === 0 ? undefined : photos
+
             EventModel.create({
                 title,
                 venue,
-                photos,
+                photos: photosToPass,
                 description,
                 extraInfo,
                 start,

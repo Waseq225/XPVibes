@@ -8,13 +8,12 @@ import {
     Typography
 } from '@mui/material'
 
-import React from 'react'
 
 
 
 export const EventItem = ({ event }) => {
 
-    const { title, _id, description, price, ticketsAvailable } = event
+    const { title, photos, description, price, ticketsAvailable } = event
 
 
     return (
@@ -22,8 +21,8 @@ export const EventItem = ({ event }) => {
             <CardActionArea>
                 <CardMedia
                     component="img"
-                    height="140"
-                    image='https://plus.unsplash.com/premium_photo-1682265676364-5838a427dee2?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                    height="250"
+                    image={photos[0]}
                     alt="green iguana"
                 />
                 <CardContent>
