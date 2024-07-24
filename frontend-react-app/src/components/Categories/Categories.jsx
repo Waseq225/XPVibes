@@ -1,10 +1,19 @@
+import { ThemeProvider } from '@emotion/react';
 import {
     Box,
     Button,
+    createTheme,
     Paper
 } from '@mui/material';
 
-
+const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#fbfcf8",
+        contrastText: "#ffffff" //button text white instead of black
+      }
+    }
+  });
 
 export const Categories = () => {
 
@@ -17,16 +26,17 @@ export const Categories = () => {
                 width: '100%',
                 justifyContent: 'space-around',
                 alignItems: 'center',
-                backgroundColor: 'teal',
+                backgroundColor: '#4c3c3c',
                 borderRadius: '0',
                 padding: '10px 0'
             }}>
-
+<ThemeProvider theme ={theme}>
             <Box>
-                <Button color='warning'>One</Button>
-                <Button color='warning'>Two</Button>
-                <Button color='warning'>Three</Button>
+                <Button>One</Button>
+                <Button>Two</Button>
+                <Button>Three</Button>
             </Box>
+            </ThemeProvider>
         </Paper>
     );
 }

@@ -48,6 +48,7 @@ export const PersonalDetails = () => {
     if (!file) {
       return
     }
+    
     const storage = getStorage(app)
     const fileName = new Date().getTime() + file.name
     const storageRef = ref(storage, fileName)
@@ -73,28 +74,30 @@ export const PersonalDetails = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
-        {user.name}
-      </Typography>
-      <Avatar
-        onClick={() => fileRef.current.click()}
-        src={avatarUrl}
-        alt="profile"
-        sx={{ marginBottom: 3 }}
-      />
-      <input
-        onChange={(e) => handleFileUpload(e.target.files[0])}
-        type="file"
-        ref={fileRef}
-        hidden
-        accept="image/*"
-      />
 
       <form
         id="personalDetails"
         onSubmit={handleClick}
         autoComplete="off"
       >
+        <Typography variant="h4" gutterBottom>
+          {user.name}
+        </Typography>
+        <Avatar
+          onClick={() => fileRef.current.click()}
+          src={avatarUrl}
+          alt="profile"
+          sx={{ marginBottom: 3 }}
+        />
+        <input
+          onChange={(e) => handleFileUpload(e.target.files[0])}
+          type="file"
+          ref={fileRef}
+          hidden
+          accept="image/*"
+        />
+
+
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
             <TextField
