@@ -91,6 +91,7 @@ export const google = async (req, res) => {
     }
 }
 
+//Authorising permission for users
 export const checkPermission = async (req, res) => {
     const { token } = req.cookies
 

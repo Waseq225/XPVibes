@@ -27,7 +27,7 @@ router.post('/google', google)
 //         .catch((exception) => res.status(422).json(exception))
 //
 
-
+//User permission endpoint
 router.get('/hasPermission/:permission', checkPermission)
 
 
