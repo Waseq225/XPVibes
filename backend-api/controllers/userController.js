@@ -44,3 +44,19 @@ export const updateUser = async (req, res) => {
         res.json(null)
     }
 }
+
+export const deleteUser = async (req, res) => {
+    const { token } = req.cookies
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
+            req.user = user
+            if (req.user.id !== req.params.id)
+                return res.json('You can only update your own account!')
+            await UserModel.findByIdAndDelete(req.params.id)
+            res.clearCookie('token')
+            res.status(200).json('User deleted')
+        })
+    } else {
+        res.json(null)
+    }
+}

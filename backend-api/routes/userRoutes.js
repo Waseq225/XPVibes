@@ -1,5 +1,5 @@
 import express from 'express'
-import { updateUser, userProfile } from '../controllers/userController.js'
+import { deleteUser, updateUser, userProfile } from '../controllers/userController.js'
 
 const router = express.Router()
 
@@ -9,5 +9,7 @@ router.get('/info', userProfile)
 // Profile details endpoint
 router.post('/update/:id', updateUser)
 
+//User deletion
+router.delete('/delete/:id', deleteUser)
 
 export default router
