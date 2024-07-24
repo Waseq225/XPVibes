@@ -23,7 +23,6 @@ export const PersonalDetails = () => {
   const [email, setEmail] = useState(user.email)
   const [phone, setPhone] = useState(user.phone)
 
-  console.log(dob)
 
   const handleClick = async (ev) => {
     ev.preventDefault()

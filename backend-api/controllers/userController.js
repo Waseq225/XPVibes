@@ -51,12 +51,12 @@ export const deleteUser = async (req, res) => {
         jwt.verify(token, process.env.JWT_SECRET, async (err, user) => {
             req.user = user
             if (req.user.id !== req.params.id)
-                return res.json('You can only update your own account!')
+                return res.json('You can only delete your own account!')
             await UserModel.findByIdAndDelete(req.params.id)
             res.clearCookie('token')
             res.status(200).json('User deleted')
         })
     } else {
-        res.json(null)
+        res.status(403).json('You don\'t have permission to delete this account')
     }
 }

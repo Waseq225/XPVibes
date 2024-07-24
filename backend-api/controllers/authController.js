@@ -43,7 +43,7 @@ export const login = async (req, res) => {
             res.status(422).json('wrong password')
         }
     } else {
-        res.json('User not found')
+        res.status(404).json('User not found')
     }
 }
 
