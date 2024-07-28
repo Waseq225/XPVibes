@@ -8,30 +8,34 @@ export function UserContextProvider({ children }) {
     const [userLoading, setUserLoading] = useState(true)
     const [hasOrganizerPermission, setHasOrganizerPermission] = useState(false)
     useEffect(() => {
+        setUserLoading(true)
         if (!user) {
-            axios.get('/user/info').then(({ data }) => {
-                setUser(data)
-                setUserLoading(false)
-                axios
-                    .get('/auth/hasPermission/manageEvent')
-                    .then(({ data }) => {
-                        setHasOrganizerPermission(data)
-                    })
-                    .catch(() => {
-                        setHasOrganizerPermission(false)
-                    })
-            })
+            axios.get('/user/info')
+                .then(({ data }) => {
+                    setUser(data)
+                    axios
+                        .get('/auth/hasPermission/manageEvent')
+                        .then(({ data }) => {
+                            setHasOrganizerPermission(data)
+                            setUserLoading(false)
+                        })
+                        .catch(() => {
+                            setHasOrganizerPermission(false)
+                            setUserLoading(false)
+                        })
+                })
         } else {
             axios
                 .get('/auth/hasPermission/manageEvent')
                 .then(({ data }) => {
                     setHasOrganizerPermission(data)
+                    setUserLoading(false)
                 })
                 .catch(() => {
                     setHasOrganizerPermission(false)
+                    setUserLoading(false)
                 })
 
-            setUserLoading(false)
         }
     }, [user])
 

@@ -1,8 +1,4 @@
-import { alpha, styled } from '@mui/material/styles';
-import { useContext, useState } from 'react';
-import axios from 'axios'
 import {
-    Close,
     HelpOutline,
     Menu as MenuIcon,
     Person,
@@ -13,11 +9,15 @@ import {
     Divider,
     IconButton,
     Menu,
-    MenuItem,
-    Snackbar
+    MenuItem
 } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+import axios from 'axios';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../userContext';
+import { SnackbarContext } from '../../../snackbarContext';
+
 
 // Change specific css here for the popup menu
 const StyledMenu = styled((props) => (
@@ -66,7 +66,7 @@ export const Hamburger = () => {
     const { user, setUser, setHasOrganizerPermission } = useContext(UserContext);
     const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = useState(null);
-    const [toastOpen, setToastOpen] = useState(false);
+    const { setToastOpen, setToastText } = useContext(SnackbarContext)
 
     const open = Boolean(anchorEl);
 
@@ -78,16 +78,13 @@ export const Hamburger = () => {
         setAnchorEl(null);
     };
 
-    const handleToastClose = () => {
-        setToastOpen(false);
-
-    };
     const handleLogout = () => {
         if (user) {
             axios.get('/auth/logout')
                 .then(() => {
                     setUser(null)
                     setHasOrganizerPermission(false)
+                    setToastText("Signed out successfully")
                     setToastOpen(true)
                 }).catch((e) =>
                     alert('Logout failed' + e)
@@ -174,22 +171,7 @@ export const Hamburger = () => {
 
                 ) : null}
             </StyledMenu>
-            <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                open={toastOpen}
-                autoHideDuration={5000}
-                onClose={handleToastClose}
-                message="Signed out successfully"
-                action={<IconButton
-                    size="small"
-                    aria-label="close"
-                    color="inherit"
-                    onClick={handleToastClose}
-                >
-                    <Close fontSize="small" />
-                </IconButton>}
 
-            />
         </div>
     );
 }
