@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { Button } from "@mui/material";
+import { useContext } from 'react'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { app } from '../../firebase';
 import axios from 'axios';
