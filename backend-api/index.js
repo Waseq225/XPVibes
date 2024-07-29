@@ -6,6 +6,8 @@ import cors from 'cors'
 import authRoutes from './routes/authRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
 import userRoutes from './routes/userRoutes.js'
+import cartRoutes from './routes/cartRoutes.js'
+
 dotenv.config()
 
 const app = express()
@@ -28,6 +30,7 @@ mongoose.connect(process.env.MONGO_URL)
 app.use('/auth', authRoutes)
 app.use('/events', eventRoutes)
 app.use('/user', userRoutes)
+app.use('/cart', cartRoutes)
 
 app.listen(4000, () => {
     console.log('Server is running on port 4000')

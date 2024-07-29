@@ -1,6 +1,6 @@
 import express from 'express'
 import { checkPermission, google, login, logout, register } from '../controllers/authController.js'
-import RolesModel from '../models/Roles.js'
+
 
 const router = express.Router()
 

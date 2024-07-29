@@ -7,14 +7,25 @@ import {
     Button,
     Typography
 } from '@mui/material'
-
-
+import axios from 'axios'
 
 
 export const EventItem = ({ event }) => {
 
-    const { title, photos, description, price, ticketsAvailable } = event
+    const { title, photos, description, price, ticketsAvailable, _id } = event
 
+    const addToCart = async () => {
+
+        axios
+            .post('/cart/addtocart', {
+                eventId: _id,
+                numberOfTickets: 1
+            })
+            .then((cart) => {
+                console.log(cart)
+            })
+            .catch((e) => alert(e.message))
+    }
 
     return (
         <Card sx={{ width: 345 }}>
@@ -42,8 +53,8 @@ export const EventItem = ({ event }) => {
                 </CardContent>
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary">
-                    Share
+                <Button size="small" color="primary" onClick={addToCart}>
+                    Add To Cart
                 </Button>
             </CardActions>
         </Card>

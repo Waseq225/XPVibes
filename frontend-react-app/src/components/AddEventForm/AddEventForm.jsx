@@ -101,18 +101,6 @@ export const AddEventForm = () => {
 
         const { year, month, day, hour, minute } = startDate.c
 
-        console.log({
-            title,
-            venue,
-            description,
-            // extraInfo,
-            photos: photoUrls,
-            categories,
-            price,
-            ticketsAvailable,
-            startDate: new Date(year, month - 1, day, hour, minute),
-        })
-
         axios
             .post('/events/addEvent', {
                 title,

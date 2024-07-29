@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 const { Schema } = mongoose
 
 //Standardized schema
+//Make fields required where necessary
 const EventSchema = new Schema(
     {
         organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

@@ -37,7 +37,7 @@ export const addEvent = async (req, res) => {
                 .catch((exception) => res.status(422).json(exception))
         })
     } else {
-        throw new Error('Login first')
+        res.status(403).json('unauthorized')
     }
 }
 

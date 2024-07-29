@@ -30,9 +30,8 @@ function App() {
               <Route path='/register' element={<RegisterPage />} />
               <Route element={<PrivateRoute />} >
                 <Route path='/profile' element={<ProfilePage />} />
-                <Route path="/cart" element={<Cart />} />
               </Route>
-
+              <Route path="/cart" element={<Cart />} />
               <Route path='/addevent' element={<AddEvent />} /> {/* Change this route */}
 
             </Routes>
