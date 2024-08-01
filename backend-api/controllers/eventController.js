@@ -45,3 +45,12 @@ export const getEvent = async (req, res) => {
     const events = await EventModel.find()
     res.json(events)
 }
+
+export const getEventsByIds = async (req, res) => {
+    const events = await EventModel.find()
+
+    const { ids } = req.query
+
+    const filteredEvents = events.filter((event) => ids.includes(event.id))
+    res.json(filteredEvents)
+}

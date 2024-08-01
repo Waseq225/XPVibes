@@ -2,15 +2,49 @@ import axios from 'axios'
 import { Box, Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
 import { EventItem } from './EventItem/EventItem'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { UserContext } from '../../userContext'
+import { useContext } from 'react'
 
 export const EventGrid = () => {
     const [events, setEvents] = useState([])
+
+    const { user } = useContext(UserContext)
+
+    const [, setCartItems] = useLocalStorage('cart', [])
+
+    const addToCart = async (
+        eventId, numberOfTickets
+    ) => {
+        if (user) {
+            axios
+                .post('/cart/addtocart', {
+                    eventId,
+                    numberOfTickets,
+                })
+                .then((cart) => {
+                    console.log(cart)
+                })
+                .catch((e) => alert(e.message))
+        } else {
+            setCartItems((prevValue) => [
+                ...prevValue,
+                {
+                    eventId,
+                    numberOfTickets,
+                },
+            ])
+        }
+    }
+
+
+
 
     useEffect(() => {
         axios
             .get('/events/getevent')
             .then((res) => {
-              
+
                 setEvents(res.data)
             })
             .catch((e) => alert(e.message))
@@ -46,7 +80,9 @@ export const EventGrid = () => {
 
                     {events
                         ? events.map((event) => (
-                            <EventItem key={event._id} event={event} />
+                            <EventItem key={event._id} 
+                            addToCart={addToCart}
+                            event={event} />
                         ))
                         : null}
                 </Box>

@@ -34,7 +34,6 @@ export const getCart = async (req, res) => {
                 .populate('event')
                 .exec()
                 .then((CartDoc) => {
-                    console.log(CartDoc)
 
                     res.json(CartDoc)
                 })
