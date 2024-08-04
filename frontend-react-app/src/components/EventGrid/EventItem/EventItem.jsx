@@ -6,7 +6,25 @@ import {
     CardMedia,
     Button,
     Typography,
+    styled,
 } from '@mui/material'
+
+
+
+// Change specific css here for the popup menu
+const StyledCard = styled(
+    Card
+)(() => ({
+
+    width: 345,
+    transition: 'width 1s ease 0s',
+    '&:hover': {
+        width: 600
+
+    },
+}));
+
+
 
 export const EventItem = ({ event, addToCart }) => {
 
@@ -17,7 +35,7 @@ export const EventItem = ({ event, addToCart }) => {
     }
 
     return (
-        <Card sx={{ width: 345 }}>
+        <StyledCard>
             <CardActionArea>
                 <CardMedia
                     component="img"
@@ -45,6 +63,6 @@ export const EventItem = ({ event, addToCart }) => {
                     Add To Cart
                 </Button>
             </CardActions>
-        </Card>
+        </StyledCard>
     )
 }
