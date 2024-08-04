@@ -37,9 +37,6 @@ export const EventGrid = () => {
         }
     }
 
-
-
-
     useEffect(() => {
         axios
             .get('/events/getevent')
