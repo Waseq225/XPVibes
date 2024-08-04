@@ -33,6 +33,7 @@ export const login = async (req, res) => {
             jwt.sign(
                 { email: userDoc.email, id: userDoc._id },
                 process.env.JWT_SECRET,
+                //expiresIn? set token expiration time
                 {},
                 (error, token) => {
                     if (error) throw error
