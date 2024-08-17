@@ -2,6 +2,7 @@ import { Close } from '@mui/icons-material'
 import {
     Box,
     Button,
+    CircularProgress,
     IconButton,
     ImageList,
     ImageListItem,
@@ -36,7 +37,8 @@ export const AddEventForm = () => {
     const fileRef = useRef(null)
     const [photoUrls, setPhotoUrls] = useState([])
     const storage = getStorage(app)
-
+    const [isPhotoUploading, setIsPhotoUploading] = useState(false)
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
 
     // const clearForm = () => {
@@ -73,23 +75,24 @@ export const AddEventForm = () => {
         const fileName = new Date().getTime() + file.name
         const storageRef = ref(storage, `EventPhotos/${fileName}`)
         const uploadTask = uploadBytesResumable(storageRef, file)
+        setIsPhotoUploading(true)
 
         uploadTask.on(
             'state_changed',
-            (snapshot) => {
-                const progress =
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-                console.log(Math.round(progress))
+            () => {
+
             },
             (error) => {
                 console.log(error)
             },
             () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     setPhotoUrls((previousState) => [
                         ...previousState,
                         downloadURL,
                     ])
+                    setIsPhotoUploading(false)
+                }
                 )
                 console.log({ photoUrls })
             }
@@ -98,7 +101,7 @@ export const AddEventForm = () => {
 
     const addEvent = async (ev) => {
         ev.preventDefault()
-
+        setIsSubmitting(true)
         const { year, month, day, hour, minute } = startDate.c
 
         axios
@@ -121,7 +124,7 @@ export const AddEventForm = () => {
                 setPrice(null)
                 setTicketsAvailable(null)
                 setStartDate(null)
-                alert('Event input successful')
+                setIsSubmitting(false)
             })
             .catch((e) => alert(e.message))
     }
@@ -213,6 +216,7 @@ export const AddEventForm = () => {
                 cols={3}
                 rowHeight={164}
             >
+
                 {photoUrls.map((item) => (
                     <ImageListItem key={item}>
                         <img src={item} alt={item} />
@@ -232,9 +236,15 @@ export const AddEventForm = () => {
                         />
                     </ImageListItem>
                 ))}
+                {isPhotoUploading ? <ImageListItem sx={{ backgroundColor: 'lightgrey' }}>
+                    <CircularProgress sx={{ margin: 'auto' }} />
+                </ImageListItem> : null}
             </ImageList>
-            <Button onClick={addEvent} variant="contained">
-                Add your Event
+            <Button 
+            onClick={addEvent} variant="contained"  disabled={isSubmitting}>
+               
+              {isSubmitting ? <CircularProgress color='text' size='1rem' sx={{ marginRight: 1 }} /> : null}
+              Add your Event
             </Button>
         </>
     )
