@@ -22,7 +22,7 @@ import { app } from '../../firebase.js'
 import { DateTime } from 'luxon'
 
 export const PersonalDetails = () => {
-  const { user } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext)
 
   const fileRef = useRef(null)
   const [avatarUrl, setAvatarUrl] = useState(user.avatar)
@@ -46,7 +46,18 @@ export const PersonalDetails = () => {
         phone,
         avatar: avatarUrl,
       })
-      .then(() => {
+      .then((returned) => {
+        const { avatar, dob, email, name, phone, _id } = returned.data
+
+        setUser({
+          avatar,
+          dob,
+          email,
+          name,
+          phone,
+          _id,
+        })
+
         setIsUpdating(false)
       })
       .catch((e) => {
@@ -61,7 +72,7 @@ export const PersonalDetails = () => {
 
     const storage = getStorage(app)
     const fileName = new Date().getTime() + file.name
-    const storageRef = ref(storage, fileName)
+    const storageRef = ref(storage, `AvatarPhotos/${fileName}`)
     const uploadTask = uploadBytesResumable(storageRef, file)
 
     setIsAvatarUploading(true)
@@ -157,7 +168,13 @@ export const PersonalDetails = () => {
               color="primary"
               disabled={isUpdating}
             >
-              {isUpdating ? <CircularProgress color='text' size='1rem' sx={{ marginRight: 1 }} /> : null}
+              {isUpdating ? (
+                <CircularProgress
+                  color="text"
+                  size="1rem"
+                  sx={{ marginRight: 1 }}
+                />
+              ) : null}
               Save
             </Button>
           </Grid>
