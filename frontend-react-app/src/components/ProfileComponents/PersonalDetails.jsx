@@ -1,4 +1,12 @@
-import { Avatar, Box, Button, Grid, TextField, Typography } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material'
 import axios from 'axios'
 import {
   getDownloadURL,
@@ -23,9 +31,12 @@ export const PersonalDetails = () => {
   const [email, setEmail] = useState(user.email)
   const [phone, setPhone] = useState(user.phone)
 
+  const [isAvatarUploading, setIsAvatarUploading] = useState(false)
+  const [isUpdating, setIsUpdating] = useState(false)
 
   const handleClick = async (ev) => {
     ev.preventDefault()
+    setIsUpdating(true)
 
     axios
       .post(`/user/update/${user._id}`, {
@@ -36,7 +47,7 @@ export const PersonalDetails = () => {
         avatar: avatarUrl,
       })
       .then(() => {
-        alert('Updated!')
+        setIsUpdating(false)
       })
       .catch((e) => {
         alert(e.message)
@@ -47,33 +58,31 @@ export const PersonalDetails = () => {
     if (!file) {
       return
     }
-    
+
     const storage = getStorage(app)
     const fileName = new Date().getTime() + file.name
     const storageRef = ref(storage, fileName)
     const uploadTask = uploadBytesResumable(storageRef, file)
 
+    setIsAvatarUploading(true)
+
     uploadTask.on(
       'state_changed',
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        console.log(Math.round(progress))
-      },
+      () => { },
       (error) => {
         console.log(error)
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setAvatarUrl(downloadURL)
-        )
+          setIsAvatarUploading(false)
+        })
       }
     )
   }
 
   return (
     <Box>
-
       <form
         id="personalDetails"
         onSubmit={handleClick}
@@ -82,12 +91,17 @@ export const PersonalDetails = () => {
         <Typography variant="h4" gutterBottom>
           {user.name}
         </Typography>
-        <Avatar
-          onClick={() => fileRef.current.click()}
-          src={avatarUrl}
-          alt="profile"
-          sx={{ marginBottom: 3 }}
-        />
+        {isAvatarUploading ? (
+          <CircularProgress sx={{ marginBottom: 3 }} />
+        ) : (
+          <Avatar
+            onClick={() => fileRef.current.click()}
+            src={avatarUrl}
+            alt="profile"
+            sx={{ marginBottom: 3 }}
+          />
+        )}
+
         <input
           onChange={(e) => handleFileUpload(e.target.files[0])}
           type="file"
@@ -95,7 +109,6 @@ export const PersonalDetails = () => {
           hidden
           accept="image/*"
         />
-
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
@@ -142,7 +155,9 @@ export const PersonalDetails = () => {
               form="personalDetails"
               variant="contained"
               color="primary"
+              disabled={isUpdating}
             >
+              {isUpdating ? <CircularProgress color='text' size='1rem' sx={{ marginRight: 1 }} /> : null}
               Save
             </Button>
           </Grid>

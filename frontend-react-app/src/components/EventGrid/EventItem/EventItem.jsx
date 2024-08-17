@@ -9,8 +9,6 @@ import {
     styled,
 } from '@mui/material'
 
-
-
 // Change specific css here for the popup menu
 const StyledCard = styled(
     Card
